@@ -1,20 +1,21 @@
 plugins {
     id 'groovy'
     id 'application'
+    id 'com.github.ben-manes.versions' version '0.51.0'
 }
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://repository.apache.org/content/repositories/snapshots'
+    }
 }
 
 dependencies {
-    implementation "org.apache.groovy:groovy:4.0.23"
-    implementation('org.gebish:geb-core:7.0') {
-        exclude(group: 'org.apache.groovy', module: 'groovy-xml')
-        exclude(group: 'org.apache.groovy', module: 'groovy-macro')
-    }
-    implementation 'org.seleniumhq.selenium:selenium-support:4.25.0'
-    implementation 'org.seleniumhq.selenium:htmlunit-driver:4.13.0'
+    implementation "org.apache.groovy:groovy:4.0.24"
+    implementation "org.apache.groovy.geb:geb-core:8.0-SNAPSHOT"
+    implementation "org.seleniumhq.selenium:selenium-support:4.27.0"
+    implementation "org.seleniumhq.selenium:htmlunit-driver:4.13.0"
     runtimeOnly "org.slf4j:slf4j-simple:2.0.16"
 }
 
@@ -31,7 +32,7 @@ application {
 }
 
 tasks.register("copyDependenciesToLib", Copy) {
-    into "$buildDir/lib"
+    into project.layout.buildDirectory.dir('lib')
     from project.configurations.runtimeClasspath.files
     doLast {
         println "copyDependenciesToLib:\n  ${project.configurations.runtimeClasspath.files*.absolutePath.join('\n  ')}\n  ->\n  $buildDir/lib"

@@ -10,6 +10,7 @@ testoutput/
 *.class
 *.swp
 *~
+._*
 
 .idea
 *.iml
